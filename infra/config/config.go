@@ -1,7 +1,5 @@
 package config
 
-import "fmt"
-
 var config Config
 
 type DBConfig struct {
@@ -28,16 +26,6 @@ type Config struct {
 
 func Db() *DBConfig {
 	return config.Db
-}
-
-func DbURL(dbConfig *DBConfig) string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
-		dbConfig.User,
-		dbConfig.Password,
-		dbConfig.Host,
-		dbConfig.Port,
-		dbConfig.DBName,
-	)
 }
 
 func LoadConfig() {
