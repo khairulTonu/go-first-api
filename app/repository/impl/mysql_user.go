@@ -1,9 +1,9 @@
 package impl
 
 import (
+	"first-api/app/model"
+	"first-api/app/repository"
 	"first-api/infra/errors"
-	"first-api/model"
-	"first-api/repository"
 	"log"
 
 	"gorm.io/gorm"
@@ -18,6 +18,16 @@ func NewMySqlUserRepository(db *gorm.DB) repository.IUser {
 	return &user{
 		DB: db,
 	}
+}
+
+func (db *user) GetAll() (*[]model.User, *errors.RestErr) {
+	var user []model.User
+	if err := db.Find(&user).Error; err != nil {
+		log.Println("error occurred while getting user ", err)
+		restErr := errors.NewInternalServerError(errors.ErrSomethingWentWrong)
+		return nil, restErr
+	}
+	return &user, nil
 }
 
 func (db *user) Save(user *model.User) (*model.User, *errors.RestErr) {

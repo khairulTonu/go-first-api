@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"first-api/app/serializers"
+	"first-api/app/svc"
 	"first-api/infra/errors"
-	"first-api/serializers"
-	"first-api/svc"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,10 +17,10 @@ func NewUserController(grp interface{}, uSvc svc.IUser) {
 	uc := &user{
 		uSvc: uSvc,
 	}
-	g := gin.Default()
+	g := grp.(*gin.Engine)
 	userGrp := g.Group("/user-api")
 	{
-		userGrp.POST("user", uc.CreateUser)
+		userGrp.POST("/user", uc.CreateUser)
 	}
 }
 
@@ -35,6 +35,36 @@ func (ctr *user) CreateUser(c *gin.Context) {
 	result, saveErr := ctr.uSvc.CreateUser(us)
 	if saveErr != nil {
 		c.JSON(saveErr.Status, saveErr)
+		return
+	}
+	c.JSON(http.StatusOK, result)
+}
+
+func (ctr *user) GetUser(c *gin.Context) {
+	userId := c.Params.ByName("id")
+	result, getErr := ctr.uSvc.GetUser(userId)
+	if getErr != nil {
+		c.JSON(getErr.Status, getErr)
+		return
+	}
+	c.JSON(http.StatusOK, result)
+}
+
+func (ctr *user) UpdateUser(c *gin.Context) {
+	userId := c.Params.ByName("id")
+	result, getErr := ctr.uSvc.UpdateUser(userId)
+	if getErr != nil {
+		c.JSON(getErr.Status, getErr)
+		return
+	}
+	c.JSON(http.StatusOK, result)
+}
+
+func (ctr *user) DeleteUser(c *gin.Context) {
+	userId := c.Params.ByName("id")
+	result, getErr := ctr.uSvc.DeleteUser(userId)
+	if getErr != nil {
+		c.JSON(getErr.Status, getErr)
 		return
 	}
 	c.JSON(http.StatusOK, result)

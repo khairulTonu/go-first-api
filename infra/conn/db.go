@@ -1,8 +1,8 @@
 package conn
 
 import (
+	"first-api/app/model"
 	"first-api/infra/config"
-	"first-api/model"
 	"fmt"
 
 	"github.com/labstack/gommon/log"

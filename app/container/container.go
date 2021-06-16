@@ -1,10 +1,10 @@
 package container
 
 import (
-	"first-api/controllers"
+	"first-api/app/http/controllers"
+	repoImpl "first-api/app/repository/impl"
+	svcImpl "first-api/app/svc/impl"
 	"first-api/infra/conn"
-	repoImpl "first-api/repository/impl"
-	svcImpl "first-api/svc/impl"
 )
 
 func Init(g interface{}) {
