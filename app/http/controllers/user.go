@@ -21,7 +21,20 @@ func NewUserController(grp interface{}, uSvc svc.IUser) {
 	userGrp := g.Group("/user-api")
 	{
 		userGrp.POST("/user", uc.CreateUser)
+		userGrp.GET("/user", uc.GetAllUser)
+		userGrp.GET("/user/:id", uc.GetUser)
+		userGrp.PUT("/user/:id", uc.UpdateUser)
+		userGrp.DELETE("/user/:id", uc.DeleteUser)
 	}
+}
+
+func (ctr *user) GetAllUser(c *gin.Context) {
+	result, getErr := ctr.uSvc.GetAllUsers()
+	if getErr != nil {
+		c.JSON(getErr.Status, getErr)
+		return
+	}
+	c.JSON(http.StatusOK, result)
 }
 
 func (ctr *user) CreateUser(c *gin.Context) {
