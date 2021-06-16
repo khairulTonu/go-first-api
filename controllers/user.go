@@ -17,8 +17,7 @@ func NewUserController(grp interface{}, uSvc svc.IUser) {
 	uc := &user{
 		uSvc: uSvc,
 	}
-	//g := gin.Default()
-	g := 
+	g := gin.Default()
 	userGrp := g.Group("/user-api")
 	{
 		userGrp.POST("user", uc.CreateUser)
