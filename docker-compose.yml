@@ -1,0 +1,46 @@
+version: '3.9'
+
+services: 
+    db:
+        container_name: first_mysql
+        build:
+            context: .
+            dockerfile: Dockerfile.db
+        ports: 
+            - 3306:3306
+        volumes:
+            - first_go:/var/lib/mysql:rw
+        environment:
+            - MYSQL_USER=tonu
+            - MYSQL_PASSWORD=tonu
+            - MYSQL_DATABASE=first_go
+            - MYSQL_ROOT_PASSWORD=tonu
+        tty: true
+        networks: 
+            - clean_networks
+    firsr_api:
+        container_name: first_api
+        build:
+            context: .
+        ports:
+            - 8080:8080
+        volumes:
+            - ./:/project
+        environment:
+            - ENV_PATH=./config.local.json
+        tty: true
+        depends_on:
+            - db
+        networks:
+            - clean_networks
+        restart: on-failure:3
+
+
+networks:
+    clean_networks:
+        name: clean_networks
+        driver: bridge
+    
+volumes:
+    first_go:
+        name: db-data

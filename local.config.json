@@ -1,0 +1,14 @@
+{
+    "app" : {
+        "name" : "first_api",
+        "port" : 8080
+    },
+    "db" : {
+        "host" : "first_mysql",
+        "port" : "3306",
+        "user" : "tonu",
+        "password" : "tonu",
+        "dbname" : "first_go"
+    }
+
+}

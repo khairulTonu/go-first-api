@@ -14,7 +14,7 @@ var db *gorm.DB
 
 func ConnectDB() {
 	conf := config.Db()
-	log.Info("connecting to mysql at " + conf.Host + ":" + conf.Port + "....")
+	log.Info("connecting to mysql at " + conf.Host + ":" + conf.Port + "...")
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", conf.User, conf.Password, conf.Host, conf.Port, conf.DBName)
 	dB, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		PrepareStmt: true,
