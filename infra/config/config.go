@@ -12,8 +12,8 @@ type DBConfig struct {
 
 func setDefaultConfig() {
 	config.Db = &DBConfig{
-		Host:     "127.0.0.1",
-		Port:     "3306",
+		Host:     "host.docker.internal",
+		Port:     "3309",
 		User:     "tonu",
 		DBName:   "first_go",
 		Password: "tonu",
@@ -30,4 +30,28 @@ func Db() *DBConfig {
 
 func LoadConfig() {
 	setDefaultConfig()
+	// _ = viper.BindEnv("ENV_PATH")
+	// envPath := viper.GetString("ENV_PATH")
+	// if envPath != "" {
+	// 	viper.AddConfigPath(envPath)
+	// 	viper.SetConfigName("config.local")
+	// 	viper.SetConfigType("json")
+	// 	err := viper.ReadInConfig()
+
+	// 	if err != nil {
+	// 		log.Println(fmt.Sprintf("%s named \"%s\"", err.Error(), envPath))
+	// 	}
+
+	// 	config = Config{}
+
+	// 	if err := viper.Unmarshal(&config); err != nil {
+	// 		panic(err)
+	// 	}
+
+	// 	if r, err := json.MarshalIndent(&config, "", "  "); err == nil {
+	// 		fmt.Println(string(r))
+	// 	}
+	// } else {
+	// 	log.Println("ENV_PATH is missing! Serving with default config...")
+	// }
 }

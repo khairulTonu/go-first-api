@@ -7,7 +7,7 @@ services:
             context: .
             dockerfile: Dockerfile.db
         ports: 
-            - 3306:3306
+            - 3309:3306
         volumes:
             - first_go:/var/lib/mysql:rw
         environment:
@@ -17,9 +17,9 @@ services:
             - MYSQL_ROOT_PASSWORD=tonu
         tty: true
         networks: 
-            - clean_networks
-    firsr_api:
-        container_name: first_api
+            - first_networks
+    first_api:
+        #container_name: first_api
         build:
             context: .
         ports:
@@ -32,15 +32,15 @@ services:
         depends_on:
             - db
         networks:
-            - clean_networks
+            - first_networks
         restart: on-failure:3
 
 
 networks:
-    clean_networks:
-        name: clean_networks
+    first_networks:
+        name: first_networks
         driver: bridge
     
 volumes:
     first_go:
-        name: db-data
+        name: db-first-go
